@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../prisma/generated/type-graphql"
+  emitTranspiledCode = true
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Enum_StatePlay {
+  Open
+  Closed
+}
+
+enum Enum_TypeGames {
+  Football
+  Basketball
+  Volleyball
+}
+
+model Match {
+  id             String      @id @default(cuid())
+  address        String
+  gameSite       String
+  price          String?
+  commentHost    String?
+  dateAndTime    DateTime
+  maxPlayers     Int?
+  currentPlayers Int?           
+  statePlay      Enum_StatePlay? @default(Open)
+  typeGames      Enum_TypeGames?
+  createdAt      DateTime     @default(now())
+}
