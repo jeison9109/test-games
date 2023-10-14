@@ -16,7 +16,12 @@
   }
 }
 
-body {
+.input {
+  @apply p-2 border border-indigo-200 focus:outline-none focus:border-indigo-800 rounded-md shadow-sm;
+}
+
+
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -24,4 +29,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */

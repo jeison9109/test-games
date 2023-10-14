@@ -1,12 +1,21 @@
-import { Navbar } from "@/components/ui/Navbar";
+import { Navbar } from "../components/ui/navbar";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Layout = ({children}) => {
   return (
-    <main>
+    <>
+    <div className="flex flex-col items-center justify-center">
+    <main className="w-full h-auto">
         <Navbar/>
         {children}
     </main>
+    <ToastContainer/>
+    </div>
+    </>
+
+
   )
 }
 
