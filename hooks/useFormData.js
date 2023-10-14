@@ -5,6 +5,7 @@ import {useRef,useState} from 'react';
     const [formData,setFormData] = useState({});
 
     const getFormData =() => {
+        const fd = new FormData(form.current);
         const obj ={};
         fd.forEach((value, key) => {
             obj[key] = value

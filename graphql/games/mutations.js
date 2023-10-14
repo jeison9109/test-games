@@ -17,3 +17,4 @@ mutation Mutation($data: MatchUpdateInput!, $where: MatchWhereUniqueInput!) {
     }
   }
 `
+export  {EDIT_MATCH};
