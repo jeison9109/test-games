@@ -8,6 +8,10 @@ import useFormData from '../../hooks/useFormData';
 import { useQuery, useMutation } from '@apollo/client'
 import { GET_MATCH } from '../../graphql/games/queries';
 import { EDIT_MATCH } from '../../graphql/games/mutations'
+import { toast } from 'react-toastify';
+import Dropdown from '../../components/ui/Dropdown'
+import { Enum_TypeGames, Enum_StatePlay } from '../../utils/enum';
+import Link from 'next/link';
 
 const EditMatch = () => {
     
@@ -15,7 +19,7 @@ const EditMatch = () => {
     const router = useRouter();
     const { id } = router.query;
     console.log('router', router);
-    const {data:dataQuery, loading, error } = useQuery(GET_MATCH,
+    const {data:dataQuery, loading, error:errorQuery } = useQuery(GET_MATCH,
         {
             variables:{id},
         });
@@ -28,7 +32,7 @@ const EditMatch = () => {
     const submitForm =(e)=>{
         e.preventDefault();
         console.log('fd',formData);
-        const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost } = formData;
+        const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost,typeGames,statePlay } = formData;
         console.log('Valor de dateAndTime:', dateAndTime);
 
         EditMatch({
@@ -40,7 +44,9 @@ const EditMatch = () => {
                 maxPlayers: { set: parseInt(maxPlayers) },
                 currentPlayers: { set: parseInt(currentPlayers) }, 
                 price: { set: price },
-                commentHost:{set: commentHost}
+                commentHost: {set: commentHost},
+                typeGames: { set: typeGames },
+                statePlay :{ set: statePlay},
               },
               where: {
                 id: dataQuery.matches[0].id,
@@ -52,13 +58,26 @@ const EditMatch = () => {
 
     useEffect(() =>{
         console.log('Mutation Data:',dataMutation)
+        if(dataMutation){
+            toast.success("Usuario modificado con exito")
+        }
     },[dataMutation])
+
+    useEffect(() =>{
+        if(errorMutation){
+          toast.error("Error editando el partido")
+        }
+
+    },[errorMutation])
 
 
     console.log('EdiData',dataQuery)
     return (
         <>
             <div className='flew flex-col w-full h-full items-center justify-center p-10'>
+                <Link href="/games">
+                    <i className='fas fa-arrow-left text-gray-600 cursor-pointer font-bold text-xl hover:text-gray-900'/>
+                </Link>
                 <div className="flex  justify-center">
                     <Image height={60} width={60} src={logoEdit} alt="Your Company" />
                 </div>
@@ -85,7 +104,7 @@ const EditMatch = () => {
 
                     <Input
                         label="Date And Time"
-                        type="datetime-local"
+                        type="datetime"
                         name="dateAndTime"
                         // value={formattedDateAndTime}
                         defaultValue={dataQuery.matches[0].dateAndTime}
@@ -111,6 +130,21 @@ const EditMatch = () => {
                         name="price"
                         defaultValue={dataQuery.matches[0].price}
                         required={true} />
+                    
+                    <Dropdown
+                        label ="Tipo de juego"
+                        name ="typeGames"
+                        defaultValue={dataQuery.matches[0].typeGames}
+                        required={true}
+                        options={Enum_TypeGames}
+                    />
+                    <Dropdown
+                        label ="Tipo de juego"
+                        name ="statePlay"
+                        defaultValue={dataQuery.matches[0].statePlay}
+                        required={true}
+                        options={Enum_StatePlay}
+                    />
 
                     <Input
                         label="Comment Host"
@@ -118,9 +152,10 @@ const EditMatch = () => {
                         name="commentHost"
                         defaultValue={dataQuery.matches[0].commentHost}
                         required={true} />
+
                     <ButtonLoading
-                        disabled={false}
-                        loading={false}
+                        disabled={Object.keys(formData).length === 0}
+                        loading={loadingMutation}
                         text="Confirm" />
                 </form>
             </div>
