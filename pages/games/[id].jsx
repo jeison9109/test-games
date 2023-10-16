@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Input from '../../components/ui/Input';
 import Image from 'next/image';
-import logoEdit from '../../public/LogoEdit.jpg'
+import logoEdit from '../../public/logoEdit.jpg'
 import ButtonLoading from '../../components/ui/ButtonLoading';
 import useFormData from '../../hooks/useFormData';
 import { useQuery, useMutation } from '@apollo/client'
