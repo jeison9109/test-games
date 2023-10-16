@@ -1,0 +1,14 @@
+export { AggregateMatchResolver } from "./Match/AggregateMatchResolver";
+export { CreateManyMatchResolver } from "./Match/CreateManyMatchResolver";
+export { CreateOneMatchResolver } from "./Match/CreateOneMatchResolver";
+export { DeleteManyMatchResolver } from "./Match/DeleteManyMatchResolver";
+export { DeleteOneMatchResolver } from "./Match/DeleteOneMatchResolver";
+export { FindFirstMatchResolver } from "./Match/FindFirstMatchResolver";
+export { FindFirstMatchOrThrowResolver } from "./Match/FindFirstMatchOrThrowResolver";
+export { FindManyMatchResolver } from "./Match/FindManyMatchResolver";
+export { FindUniqueMatchResolver } from "./Match/FindUniqueMatchResolver";
+export { FindUniqueMatchOrThrowResolver } from "./Match/FindUniqueMatchOrThrowResolver";
+export { GroupByMatchResolver } from "./Match/GroupByMatchResolver";
+export { UpdateManyMatchResolver } from "./Match/UpdateManyMatchResolver";
+export { UpdateOneMatchResolver } from "./Match/UpdateOneMatchResolver";
+export { UpsertOneMatchResolver } from "./Match/UpsertOneMatchResolver";

@@ -93,7 +93,7 @@ const Card = ({ data, loading, error }) => {
                   </table>
                   <div className="flex justify-center my-3">
                     <div className="text-center mx-2">
-                      {console.log('data', m.id)}
+                      {/* {console.log('data', m.id)} */}
                       <Link href="/games/[id]" as={`/games/${m.id}`} passHref className="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium">
                         <i className='fas fa-pen text-yellow-600 hover:text-yellow-400 cursor-pointer ' data-tooltip-id='edit' data-tooltip-content="Edit Match">
                           <Tooltip id="edit" />

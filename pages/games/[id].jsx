@@ -29,8 +29,8 @@ const EditMatch = () => {
 
     const router = useRouter();
     const { id } = router.query;
-    console.log('id', id)
-    console.log('router', router);
+    // console.log('id', id)
+    // console.log('router', router);
     const { data: dataQuery, loading, error: errorQuery } = useQuery(GET_MATCH,
         {
             variables: { id },
@@ -42,13 +42,14 @@ const EditMatch = () => {
     // console.log('EdiData', dataQuery.matches.address);
 
     //Obtener el objecto por el id
-    const matchWithId = dataQuery.matches.find(match => match.id === id);
+    const matchWithId = dataQuery?.matches ? dataQuery.matches.find(match => match.id === id) : null;
+
 
     const submitForm = (e) => {
         e.preventDefault();
-        console.log('fd', formData);
+        // console.log('fd', formData);
         const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost, typeGames, statePlay, phone } = formData;
-        console.log('Valor de dateAndTime:', dateAndTime);
+        // console.log('Valor de dateAndTime:', dateAndTime);
 
         EditMatch({
             variables: {
@@ -97,7 +98,7 @@ const EditMatch = () => {
     }, [errorMutation])
 
 
-    console.log('EdiData', dataQuery)
+    // console.log('EdiData', dataQuery)
 
     return (
         <>
@@ -125,7 +126,7 @@ const EditMatch = () => {
                         label="Ubicación"
                         name="gameSite"
                         required={true}
-                        defaultValue={matchWithId.gameSite}
+                        defaultValue={matchWithId?.gameSite}
                         options={departamentos}
                         onChange={updateFormDataDepartamento}
                     />
@@ -134,14 +135,14 @@ const EditMatch = () => {
                         label="Address"
                         type="text"
                         name="address"
-                        defaultValue={matchWithId.address}
+                        defaultValue={matchWithId?.address}
                         required={true} />
 
                     <Input
                         label="Phone"
                         type="text"
                         name="phone"
-                        defaultValue={matchWithId.phone}
+                        defaultValue={matchWithId?.phone}
                         required={true} />
 
                     <Input
@@ -149,41 +150,41 @@ const EditMatch = () => {
                         type="datetime"
                         name="dateAndTime"
                         // value={formattedDateAndTime}
-                        defaultValue={matchWithId.dateAndTime}
+                        defaultValue={matchWithId?.dateAndTime}
                         required={true} />
 
                     <Input
                         label="MaxPlayers"
                         type="text"
                         name="maxPlayers"
-                        defaultValue={matchWithId.maxPlayers}
+                        defaultValue={matchWithId?.maxPlayers}
                         required={true} />
 
                     <Input
                         label="Current Players"
                         type="text"
                         name="currentPlayers"
-                        defaultValue={matchWithId.currentPlayers}
+                        defaultValue={matchWithId?.currentPlayers}
                         required={true} />
 
                     <Input
                         label="Price"
                         type="text"
                         name="price"
-                        defaultValue={matchWithId.price}
+                        defaultValue={matchWithId?.price}
                         required={true} />
 
                     <Dropdown
                         label="Tipo de juego"
                         name="typeGames"
-                        defaultValue={matchWithId.typeGames}
+                        defaultValue={matchWithId?.typeGames}
                         required={true}
                         options={Enum_TypeGames}
                     />
                     <Dropdown
                         label="Tipo de juego"
                         name="statePlay"
-                        defaultValue={matchWithId.statePlay}
+                        defaultValue={matchWithId?.statePlay}
                         required={true}
                         options={Enum_StatePlay}
                     />
@@ -192,7 +193,7 @@ const EditMatch = () => {
                         label="Comment Host"
                         type="text"
                         name="commentHost"
-                        defaultValue={matchWithId.commentHost}
+                        defaultValue={matchWithId?.commentHost}
                         required={true} />
 
                     <ButtonLoading

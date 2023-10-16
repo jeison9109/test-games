@@ -24,11 +24,11 @@ const CreateMatch = () => {
     setDepartamentos(dataColombia.map(item => item.departamento));
   }, []);
 
-  console.log("Ubicacion", departamentos);
+  // console.log("Ubicacion", departamentos);
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log('fd', formData);
+    // console.log('fd', formData);
 
     // Data del formData para pasarla en la mutacion
     const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost, typeGames, statePlay,phone } = formData;
@@ -63,7 +63,7 @@ const CreateMatch = () => {
 
   // Toast de create exitoso
   useEffect(() => {
-    console.log('Mutation Data:', data)
+    // console.log('Mutation Data:', data)
     if (data) {
       toast.success("Match creado con exito")
     }
