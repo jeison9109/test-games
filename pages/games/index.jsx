@@ -4,7 +4,6 @@ import { GET_MATCH } from '../../graphql/games/queries';
 import Card from '../../components/ui/Card';
 import { toast } from 'react-toastify';
 import Loading from '../../components/ui/Loading';
-import { initializeApollo } from '@apollo/client'
 import Head from 'next/head';
 
 

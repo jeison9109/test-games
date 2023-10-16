@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import logoEdit from '../../public/LogoEdit.jpg'
+import logoEdit from '../../public/logoEdit.jpg'
 import Dropdown from '../../components/ui/Dropdown'
 import Input from '../../components/ui/Input';
 import { Enum_TypeGames, Enum_StatePlay } from '../../utils/enum';
