@@ -31,6 +31,7 @@ model Match {
   id             String      @id @default(cuid())
   address        String
   gameSite       String
+  phone          String?
   price          String?
   commentHost    String?
   dateAndTime    DateTime

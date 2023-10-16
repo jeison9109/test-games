@@ -14,6 +14,7 @@ mutation Mutation($data: MatchUpdateInput!, $where: MatchWhereUniqueInput!) {
       price
       statePlay
       typeGames
+      phone
     }
   }
 `
@@ -30,6 +31,7 @@ mutation CreateOneMatch($data: MatchCreateInput!) {
     price
     statePlay
     typeGames
+    phone
   }
 }`
 
@@ -45,6 +47,7 @@ const DELETE_MATCH = gql`mutation DeleteOneMatch($where: MatchWhereUniqueInput!)
     price
     statePlay
     typeGames
+    phone
   }
 }`
 

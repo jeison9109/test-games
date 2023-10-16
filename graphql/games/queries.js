@@ -13,6 +13,7 @@ query Query {
       statePlay
       typeGames
       currentPlayers
+      phone
     }
   }
 `;

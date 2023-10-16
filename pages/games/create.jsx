@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import logoEdit from '../../public/LogoEdit.jpg'
 import Dropdown from '../../components/ui/Dropdown'
@@ -10,53 +10,80 @@ import useFormData from '../../hooks/useFormData';
 import { useMutation } from '@apollo/client'
 import { CREATE_MATCH } from '../../graphql/games/mutations'
 import { toast } from 'react-toastify';
+import dataColombia from '../../utils/dataColombia.json';
+import Head from 'next/head';
 
 const CreateMatch = () => {
-  const {form,formData,updateFormData} = useFormData(null);
-  const [createMatch,{data, loading, error}] = useMutation(CREATE_MATCH);
 
-  const submitForm =(e)=>{
+  const { form, formData, updateFormData } = useFormData(null);
+  const [createMatch, { data, loading, error }] = useMutation(CREATE_MATCH);
+  const [departamentos, setDepartamentos] = useState([]);
+
+  useEffect(() => {
+    // Extraer la lista de departamentos del JSON
+    setDepartamentos(dataColombia.map(item => item.departamento));
+  }, []);
+
+  console.log("Ubicacion", departamentos);
+
+  const submitForm = (e) => {
     e.preventDefault();
-    console.log('fd',formData);
+    console.log('fd', formData);
 
     // Data del formData para pasarla en la mutacion
-    const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost,typeGames,statePlay } = formData;
-  
+    const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost, typeGames, statePlay,phone } = formData;
+
     createMatch({
-        variables: {
-          data: {
-            gameSite:gameSite ,
-            address:address ,
-            dateAndTime:  dateAndTime  ,
-            maxPlayers:  parseInt(maxPlayers) ,
-            currentPlayers:  parseInt(currentPlayers) , 
-            price: price ,
-            commentHost: commentHost,
-            typeGames:  typeGames ,
-            statePlay :statePlay,
-          },
+      variables: {
+        data: {
+          gameSite: gameSite,
+          address: address,
+          dateAndTime: dateAndTime,
+          maxPlayers: parseInt(maxPlayers),
+          currentPlayers: parseInt(currentPlayers),
+          price: price,
+          commentHost: commentHost,
+          typeGames: typeGames,
+          statePlay: statePlay,
+          phone: phone,
         },
-      });
-}
+      },
+    });
+  }
 
-// Toast de create exitoso
-useEffect(() =>{
-  console.log('Mutation Data:',data)
-  if(data){
+  const updateFormDataDepartamento = (e) => {
+    const { name, value } = e.target;
+    // Actualiza el estado con el valor directo
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+  };
+
+  // Toast de create exitoso
+  useEffect(() => {
+    console.log('Mutation Data:', data)
+    if (data) {
       toast.success("Match creado con exito")
-  }
-},[data])
+    }
+  }, [data])
 
-// Toast de error en el create de la mutacion
-useEffect(() =>{
-  if(error){
-    toast.error("Error creando el partido")
-  }
+  // Toast de error en el create de la mutacion
+  useEffect(() => {
+    if (error) {
+      toast.error("Error creando el partido")
+    }
 
-},[error])
+  }, [error])
 
   return (
     <>
+      <div>
+      <Head>
+        <title>Create Games | JustPlay</title>
+      </Head>
+    </div>
       <div className='flew flex-col w-full h-full items-center justify-center p-10'>
         <Link href="/games">
           <i className='fas fa-arrow-left text-gray-600 cursor-pointer font-bold text-xl hover:text-gray-900' />
@@ -71,10 +98,18 @@ useEffect(() =>{
           ref={form}
           className='flex flex-col items-center justify-center'
         >
-          <Input
-            label="Game Site"
-            type="text"
+          <Dropdown
+            label="Ubicación"
             name="gameSite"
+            required={true}
+            options={departamentos}
+            onChange={updateFormDataDepartamento}
+          />
+
+          <Input
+            label="Date And Time"
+            type="datetime-local"
+            name="dateAndTime"
             required={true} />
 
           <Input
@@ -82,11 +117,10 @@ useEffect(() =>{
             type="text"
             name="address"
             required={true} />
-
           <Input
-            label="Date And Time"
-            type="date"
-            name="dateAndTime"
+            label="Phone"
+            type="text"
+            name="phone"
             required={true} />
 
           <Input
@@ -114,11 +148,12 @@ useEffect(() =>{
             options={Enum_TypeGames}
           />
           <Dropdown
-            label="Tipo de juego"
+            label="Estado del juego"
             name="statePlay"
             required={true}
             options={Enum_StatePlay}
           />
+
 
           <Input
             label="Comment Host"

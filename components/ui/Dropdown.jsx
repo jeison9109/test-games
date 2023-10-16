@@ -22,7 +22,7 @@ const Dropdown = ({label, name, defaultValue= '', required, options}) => {
             {optionsSelect.map((o) => {
                 return (
                     <option key={nanoid()}
-                    value={o[0]}
+                    value={o[1]}
                     disabled={o[2] ?? false}
                     >
                         {o[1]}

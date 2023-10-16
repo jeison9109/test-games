@@ -12,11 +12,21 @@ import { toast } from 'react-toastify';
 import Dropdown from '../../components/ui/Dropdown'
 import { Enum_TypeGames, Enum_StatePlay } from '../../utils/enum';
 import Link from 'next/link';
+import dataColombia from '../../utils/dataColombia.json';
+import Head from 'next/head';
+
 
 // Ruta dinamic por Id
 const EditMatch = () => {
     /// Utilizacion de formData para obtener los datos del form
     const { form, formData, updateFormData } = useFormData(null);
+    const [departamentos, setDepartamentos] = useState([]);
+
+    useEffect(() => {
+        // Extraer la lista de departamentos del JSON
+        setDepartamentos(dataColombia.map(item => item.departamento));
+    }, []);
+
     const router = useRouter();
     const { id } = router.query;
     console.log('id', id)
@@ -29,7 +39,7 @@ const EditMatch = () => {
     // Mutacion para realizar el update del partido
     const [EditMatch, { data: dataMutation, loading: loadingMutation, error: errorMutation }] = useMutation(EDIT_MATCH)
 
-    console.log('EdiData', dataQuery.matches.address);
+    // console.log('EdiData', dataQuery.matches.address);
 
     //Obtener el objecto por el id
     const matchWithId = dataQuery.matches.find(match => match.id === id);
@@ -37,7 +47,7 @@ const EditMatch = () => {
     const submitForm = (e) => {
         e.preventDefault();
         console.log('fd', formData);
-        const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost, typeGames, statePlay } = formData;
+        const { gameSite, address, dateAndTime, maxPlayers, currentPlayers, price, commentHost, typeGames, statePlay, phone } = formData;
         console.log('Valor de dateAndTime:', dateAndTime);
 
         EditMatch({
@@ -52,6 +62,7 @@ const EditMatch = () => {
                     commentHost: { set: commentHost },
                     typeGames: { set: typeGames },
                     statePlay: { set: statePlay },
+                    phone: { set: phone },
                 },
                 where: {
                     id: matchWithId.id,
@@ -59,6 +70,16 @@ const EditMatch = () => {
             },
         });
     }
+
+    const updateFormDataDepartamento = (e) => {
+        const { name, value } = e.target;
+        // Actualiza el estado con el valor directo
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+
+    };
 
     // Toast de update exitoso
     useEffect(() => {
@@ -77,9 +98,15 @@ const EditMatch = () => {
 
 
     console.log('EdiData', dataQuery)
-    if (loading) return <div>...Cargando</div>
+
     return (
         <>
+            <div>
+                <Head>
+                    <title>Edit Games | JustPlay</title>
+                </Head>
+            </div>
+
             <div className='flew flex-col w-full h-full items-center justify-center p-10'>
                 <Link href="/games">
                     <i className='fas fa-arrow-left text-gray-600 cursor-pointer font-bold text-xl hover:text-gray-900' />
@@ -94,18 +121,27 @@ const EditMatch = () => {
                     ref={form}
                     className='flex flex-col items-center justify-center'
                 >
-                    <Input
-                        label="Game Site"
-                        type="text"
+                    <Dropdown
+                        label="Ubicación"
                         name="gameSite"
+                        required={true}
                         defaultValue={matchWithId.gameSite}
-                        required={true} />
+                        options={departamentos}
+                        onChange={updateFormDataDepartamento}
+                    />
 
                     <Input
                         label="Address"
                         type="text"
                         name="address"
                         defaultValue={matchWithId.address}
+                        required={true} />
+
+                    <Input
+                        label="Phone"
+                        type="text"
+                        name="phone"
+                        defaultValue={matchWithId.phone}
                         required={true} />
 
                     <Input
