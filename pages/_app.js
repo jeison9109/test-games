@@ -4,7 +4,8 @@ import { Layout } from '../layout'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri:'https://test-games-hnvf8xfp9-jeison9109.vercel.app/api/graphql',
+  uri:'https://test-games-rho.vercel.app/api/graphql',
+  // uri: 'http://localhost:3000/api/graphql',
   cache: new InMemoryCache(),
 
 })

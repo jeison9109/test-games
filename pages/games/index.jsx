@@ -6,8 +6,6 @@ import { toast } from 'react-toastify';
 import Loading from '../../components/ui/Loading';
 import Head from 'next/head';
 
-
-
 const GamesCurrent = () => {
 
   // Query para obtener los Matches de la db
